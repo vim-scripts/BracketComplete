@@ -1,0 +1,27 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4266
+
+DESCRIPTION
+Frequently, text inside parentheses, be it a warning "(don't do this)" or
+function arguments "(foo, bar, 42)" is repeated. This also applies to other
+bracket delimiters, e.g. HTML tags "<img src='banner.jpg' alt=''>" or arrays
+"[1, 2, 3]".
+This plugin provides a completion mapping that, when you realize you're typing
+the same contents of a bracket-delimited text again, completes the entire text
+inside the brackets from other matches in the buffer. The completion base
+always contains the entire text between the cursor and the previous opening
+bracket, so it doesn't matter how far you've already been into retyping this.
+
+SEE ALSO
+- Check out the CompleteHelper.vim plugin page (vimscript #3914) for a full
+  list of insert mode completions powered by it.
+
+USAGE
+In insert mode, invoke the completion via CTRL-X ).
+You can then search forward and backward via CTRL-N / CTRL-P, as usual.
+
+CTRL-X )                Find matches for the text before the cursor, up to the
+                        previous bracket ( [ { < on the current line, and
+                        offer matches of the entire text inside the brackets,
+                        like the i( i[ i{ i< text objects.
+                        This also works for tag-blocks with the it text
+                        object; "<b>f|" will complete to "<b>foo bar</b>".

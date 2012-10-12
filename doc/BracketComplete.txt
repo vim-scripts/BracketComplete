@@ -1,0 +1,109 @@
+*BracketComplete.txt*   Insert mode completion for text inside various brackets.
+
+		      BRACKET COMPLETE    by Ingo Karkat
+							 *BracketComplete.vim*
+description			|BracketComplete-description|
+usage				|BracketComplete-usage|
+installation			|BracketComplete-installation|
+configuration			|BracketComplete-configuration|
+limitations			|BracketComplete-limitations|
+known problems			|BracketComplete-known-problems|
+todo				|BracketComplete-todo|
+history				|BracketComplete-history|
+
+==============================================================================
+DESCRIPTION					 *BracketComplete-description*
+
+Frequently, text inside parentheses, be it a warning "(don't do this)" or
+function arguments "(foo, bar, 42)" is repeated. This also applies to other
+bracket delimiters, e.g. HTML tags "<img src='banner.jpg' alt=''>" or arrays
+"[1, 2, 3]".
+This plugin provides a completion mapping that, when you realize you're typing
+the same contents of a bracket-delimited text again, completes the entire text
+inside the brackets from other matches in the buffer. The completion base
+always contains the entire text between the cursor and the previous opening
+bracket, so it doesn't matter how far you've already been into retyping this.
+
+SEE ALSO								     *
+
+- Check out the |CompleteHelper.vim| plugin page (vimscript #3914) for a full
+  list of insert mode completions powered by it.
+
+==============================================================================
+USAGE						       *BracketComplete-usage*
+
+In insert mode, invoke the completion via CTRL-X ).
+You can then search forward and backward via CTRL-N / CTRL-P, as usual.
+
+								  *i_CTRL-X_)*
+CTRL-X )		Find matches for the text before the cursor, up to the
+			previous bracket ( [ { < on the current line, and
+			offer matches of the entire text inside the brackets,
+			like the |i(| |i[| |i{| |i<| text objects.
+			This also works for |tag-blocks| with the |it| text
+			object; "<b>f|" will complete to "<b>foo bar</b>".
+
+==============================================================================
+INSTALLATION					*BracketComplete-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim BracketComplete*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES					*BracketComplete-dependencies*
+
+- Requires Vim 7.0 or higher.
+- Requires the |MotionComplete.vim| plugin (vimscript #4265).
+
+==============================================================================
+CONFIGURATION				       *BracketComplete-configuration*
+
+The general |MotionComplete-configuration| applies here, too.
+
+For a permanent configuration, put the following commands into your |vimrc|:
+
+					     *g:BracketComplete_BracketConfig*
+The recognized bracket types are defined via a Dictionary. Its keys are the
+opening brackets, which are mapped to an object that must have an "opposite"
+attribute that specifies the closing bracket. If there's a text object, it can
+be specified via the "textobject" attribute (without the preceding "a" / "i");
+otherwise, a search to the closing bracket is used to retrieve the text.
+To add an imaginary bracketing from : to ;, use: >
+    runtime plugin/BracketComplete.vim	" Define the default brackets first.
+    let g:BracketComplete_BracketConfig[':'] = {'opposite': ';'}
+<
+						       *BracketComplete-remap*
+If you want to use different mapping, map your keys to the
+<Plug>(BracketComplete...) mapping target _before_ sourcing the script
+(e.g. in your |vimrc|): >
+    imap <C-x>) <Plug>(BracketComplete)
+<
+==============================================================================
+LIMITATIONS					 *BracketComplete-limitations*
+
+KNOWN PROBLEMS				      *BracketComplete-known-problems*
+
+TODO							*BracketComplete-todo*
+
+IDEAS						       *BracketComplete-ideas*
+
+==============================================================================
+HISTORY						     *BracketComplete-history*
+
+1.00	12-Oct-2012
+First published version.
+
+0.01	02-Oct-2012
+Started development.
+
+==============================================================================
+Copyright: (C) 2012 Ingo Karkat
+The VIM LICENSE applies to this script; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
